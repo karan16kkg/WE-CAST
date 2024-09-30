@@ -10,7 +10,6 @@ user.get("/signup",(req,res)=>{
 
 user.post("/signup",(req,res,next)=>{
     let{name,email,password} = req.body;
-    console.log(name);
     let database = data;
     let user={
         id : new Date().getTime(),
