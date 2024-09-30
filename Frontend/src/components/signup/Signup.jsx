@@ -2,6 +2,7 @@ import React from 'react'
 import { useState,useEffect } from 'react'
 import axios from 'axios'
 import "./Signup.css"
+import { useNavigate } from 'react-router-dom'
 const Signup = () => {
 
   useEffect(() => {
@@ -19,15 +20,28 @@ const Signup = () => {
     setform({ ...form, [e.target.name]: e.target.value });
   }
 
+  const navigate = useNavigate()
   const handleSubmit = ()=>{
     axios.post("http://localhost:3000/user/signup",form)
     .then((response)=>{
+      const x = response.data;
+      if(x.includes("user added successfully")){
+        setaction("Login")
+        setform({name:"",email:"",password:""})
+      }
       console.log(response.data)
     })
   }
 
   const handleLogin = ()=>{
-
+    axios.post("http://localhost:3000/user/login",form)
+    .then((response)=>{
+      const x = response.data
+      if(x.includes("Login successfully")){
+        navigate("/")
+      }
+      console.log(response.data);
+    })
   }
   console.log(form.name);
   return (
@@ -55,7 +69,6 @@ const Signup = () => {
 
           <div>
             {action==="Sign up"?<button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleSubmit}>Sign up</button>:<button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleLogin}>Login</button>}
-            {/* <button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleSubmit}>{action}</button> */}
           </div>
         </div>
       </div>
