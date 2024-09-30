@@ -1,33 +1,45 @@
 import React from 'react'
 import { useState } from 'react'
 const Signup = () => {
-    const [form, setform] = useState({name:"",email:"",password:""})
-    const [action, setaction] = useState("Sign up")
 
-    const handleChange = (e)=>{
-        setform({...form,[e.target.name]:e.target.value});
-    }
-    console.log(form.name);
+  
+  const [form, setform] = useState({ name: "", email: "", password: "" })
+  const [action, setaction] = useState("Login")
+
+  const handleChange = (e) => {
+    setform({ ...form, [e.target.name]: e.target.value });
+  }
+  console.log(form.name);
   return (
-    <div className='border border-black w-1/4'>
-      <h1 className=''>{action}</h1>
-      <span className='text-[#877354]'>Already have an account?<button className='text-black'>Login here</button></span>
-        <div className='border border-black'>
-          <label>Name</label><br/>
-          <input value={form.name} type="text" name="name" onChange={handleChange} />
-        </div>
+    <>
+    <div className='bg-[#245795] h-screen'>
+      <div className='bg-[#4b6789] h-screen w-1/2'>
+        <div className='w-1/4 absolute top-40 left-40'>
+          <h1 className='text-4xl font-bold mb-1'>{action}</h1>
+          {action === "Login" ?<div className='text-red-400'>Don't have an account?<button className='text-black' onClick={()=>{setaction("Sign up")}} >Create Account</button></div>:<div className='text-red-400'>Already have an account?<button className='text-black' onClick={()=>{setaction("Login")}}>Login here</button></div>}
+          
+          {action === "Sign up" ?<div className='mt-5'>
+            <label>Name</label><br />
+            <input value={form.name} className='w-80 h-10 rounded-lg bg-transparent outline-none border border-blue-500 px-3' type="text" name="name" onChange={handleChange} />
+          </div>:<div></div>}
+        
+          <div className='mt-3'>
+            <label>Email Address</label><br />
+            <input value={form.email} className='w-80 h-10 rounded-lg bg-transparent outline-none border border-blue-500 px-3' type="email" name="email" onChange={handleChange} />
+          </div>
 
-        <div className='border border-black'>
-          <label>Email Address</label><br/>
-          <input value={form.email} type="email" name="email" onChange={handleChange} />
-        </div>
+          <div className='mt-3'>
+            <label>Password</label><br />
+            <input value={form.password} className='w-80 h-10 rounded-lg bg-transparent outline-none border border-blue-500 px-3' type="password" name="password" onChange={handleChange} />
+          </div>
 
-        <div className='border border-black'>
-          <label>Password</label><br/>
-          <input value={form.password} type="password" name="password" onChange={handleChange} />
+          <div>
+            <button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800'>{action}</button>
+          </div>
         </div>
-
-    </div>
+      </div>
+      </div>
+    </>
   )
 }
 
