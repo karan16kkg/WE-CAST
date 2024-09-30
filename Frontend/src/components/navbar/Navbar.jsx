@@ -1,14 +1,21 @@
 import React from 'react'
 import { useState } from 'react'
 import {HashLink as Link} from 'react-router-hash-link'
-import { useNavigate } from 'react-router-dom'
+import { Route, useNavigate } from 'react-router-dom'
 import "./Navbar.css"
+import Signup from '../signup/Signup'
 const Navbar = () => {
   const [going, setgoing] = useState("home")
   const [logged, setlogged] = useState("yes")
   const navigate = useNavigate()
 
   const handleLogin = ()=>{
+    // navigate(
+    //   <Route>
+    //     path="/signup",
+    //     element={<Signup setgoing = {setgoing}/>}
+    //   </Route>
+    // )
     navigate("/signup")
   }
   return (
