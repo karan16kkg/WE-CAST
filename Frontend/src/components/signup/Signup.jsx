@@ -1,19 +1,39 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
+import axios from 'axios'
+import "./Signup.css"
 const Signup = () => {
 
+  useEffect(() => {
+    axios.get('http://localhost:3000/user/signup')
+    .then((response)=>{
+      console.log(response.data);
+    })
+  }, [])
   
+
   const [form, setform] = useState({ name: "", email: "", password: "" })
   const [action, setaction] = useState("Login")
 
   const handleChange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });
   }
+
+  const handleSubmit = ()=>{
+    axios.post("http://localhost:3000/user/signup",form)
+    .then((response)=>{
+      console.log(response.data)
+    })
+  }
+
+  const handleLogin = ()=>{
+
+  }
   console.log(form.name);
   return (
     <>
-    <div className='bg-[#245795] h-screen'>
-      <div className='bg-[#4b6789] h-screen w-1/2'>
+    <div className=''>
+      <div className='data h-screen w-1/2'>
         <div className='w-1/4 absolute top-40 left-40'>
           <h1 className='text-4xl font-bold mb-1'>{action}</h1>
           {action === "Login" ?<div className='text-red-400'>Don't have an account?<button className='text-black' onClick={()=>{setaction("Sign up")}} >Create Account</button></div>:<div className='text-red-400'>Already have an account?<button className='text-black' onClick={()=>{setaction("Login")}}>Login here</button></div>}
@@ -34,7 +54,8 @@ const Signup = () => {
           </div>
 
           <div>
-            <button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800'>{action}</button>
+            {action==="Sign up"?<button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleSubmit}>Sign up</button>:<button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleLogin}>Login</button>}
+            {/* <button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleSubmit}>{action}</button> */}
           </div>
         </div>
       </div>
