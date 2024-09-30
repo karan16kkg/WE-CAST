@@ -1,10 +1,14 @@
 const express = require ("express");
-const signup = express();
+const user = express();
 const fs = require("fs");
 const data = require("./data.json");
 const { CreateError } = require("./Middleware/errors");
 
-signup.post("/signup",(req,res,next)=>{
+user.get("/signup",(req,res)=>{
+    res.send(data);
+})
+
+user.post("/signup",(req,res,next)=>{
     let{name,email,password} = req.body;
     console.log(name);
     let database = data;
@@ -32,4 +36,4 @@ signup.post("/signup",(req,res,next)=>{
     }
 })
 
-module.exports = signup;
+module.exports = user;
