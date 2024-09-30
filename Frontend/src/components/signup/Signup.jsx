@@ -13,8 +13,18 @@ const Signup = () => {
       <h1 className=''>{action}</h1>
       <span className='text-[#877354]'>Already have an account?<button className='text-black'>Login here</button></span>
         <div className='border border-black'>
-          
-            <input value={form.name} type="text" name="name" onChange={handleChange} />
+          <label>Name</label><br/>
+          <input value={form.name} type="text" name="name" onChange={handleChange} />
+        </div>
+
+        <div className='border border-black'>
+          <label>Email Address</label><br/>
+          <input value={form.email} type="email" name="email" onChange={handleChange} />
+        </div>
+
+        <div className='border border-black'>
+          <label>Password</label><br/>
+          <input value={form.password} type="password" name="password" onChange={handleChange} />
         </div>
 
     </div>
