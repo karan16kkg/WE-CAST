@@ -8,21 +8,20 @@ import Cookies from "js-cookie"
 
 const Navbar = () => {
   const [going, setgoing] = useState("home")
-  const [logged, setlogged] = useState("yes")
   const [loggedVal, setloggedVal] = useState("Login");
   const navigate = useNavigate()
 
   const handleLogin = ()=>{
-    if (loggedVal != "User")
+    // if (loggedVal != "User")
     navigate("/signup")
   }
 
-  useEffect(() => {
-    if (Cookies.get("User") != null)
-    {
-      setloggedVal("User");
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (Cookies.get("User") != null)
+  //   {
+  //     setloggedVal("User");
+  //   }
+  // }, [])
 
   return (
     <div className='flex justify-between items-center fixed w-full top-0'>
