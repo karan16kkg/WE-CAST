@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 const Signup = () => {
 
   useEffect(() => {
-    axios.get('http://localhost:3000/user/signup')
+    axios.get('https://weather-6q3e-gysp7wjhg-karan-kumar-gargs-projects.vercel.app/user/signup')
     .then((response)=>{
       console.log(response.data);
     })
@@ -22,7 +22,7 @@ const Signup = () => {
 
   const navigate = useNavigate()
   const handleSubmit = ()=>{
-    axios.post("http://localhost:3000/user/signup",form)
+    axios.post("https://weather-6q3e-gysp7wjhg-karan-kumar-gargs-projects.vercel.app/user/signup",form)
     .then((response)=>{
       const x = response.data;
       if(x.includes("user added successfully")){
@@ -34,7 +34,7 @@ const Signup = () => {
   }
 
   const handleLogin = ()=>{
-    axios.post("http://localhost:3000/user/login",form)
+    axios.post("https://weather-6q3e-gysp7wjhg-karan-kumar-gargs-projects.vercel.app/user/login",form)
     .then((response)=>{
       const x = response.data
       if(x.includes("Login successfully")){
