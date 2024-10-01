@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 const Signup = () => {
 
   useEffect(() => {
-    axios.get('https://weather-6q3e-gysp7wjhg-karan-kumar-gargs-projects.vercel.app/user/signup')
+    axios.get('https://weather-xj16.onrender.com/user/signup')
     .then((response)=>{
       console.log(response.data);
     })
@@ -22,7 +22,7 @@ const Signup = () => {
 
   const navigate = useNavigate()
   const handleSubmit = ()=>{
-    axios.post("https://weather-6q3e-gysp7wjhg-karan-kumar-gargs-projects.vercel.app/user/signup",form)
+    axios.post("https://weather-xj16.onrender.coms/user/signup",form)
     .then((response)=>{
       const x = response.data;
       if(x.includes("user added successfully")){
@@ -34,7 +34,7 @@ const Signup = () => {
   }
 
   const handleLogin = ()=>{
-    axios.post("https://weather-6q3e-gysp7wjhg-karan-kumar-gargs-projects.vercel.app/user/login",form)
+    axios.post("https://weather-xj16.onrender.com/user/login",form)
     .then((response)=>{
       const x = response.data
       if(x.includes("Login successfully")){
@@ -47,7 +47,7 @@ const Signup = () => {
   return (
     <>
     <div className=''>
-      <div className='data h-screen w-1/2'>
+      <div className='data h-screen w-1/2'>j
         <div className='w-1/4 absolute top-40 left-40'>
           <h1 className='text-4xl font-bold mb-1'>{action}</h1>
           {action === "Login" ?<div className='text-red-400'>Don't have an account?<button className='text-black' onClick={()=>{setaction("Sign up")}} >Create Account</button></div>:<div className='text-red-400'>Already have an account?<button className='text-black' onClick={()=>{setaction("Login")}}>Login here</button></div>}

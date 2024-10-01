@@ -12,9 +12,9 @@ const Footer = () => {
         </div>
         <span className='text-white'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus porro voluptate harum consequuntur illum nulla aspernatur, eaque quod debitis ex.</span><br/>
         <div className='mt-5'>
-          <span className='text-white text-4xl'><i class="bi bi-facebook"></i></span>
-          <span className='text-white text-3xl px-1 border border-white rounded-full rounded-l-full rounded-r-full mx-4'><i class="bi bi-twitter"></i></span>
-          <span className='text-white text-4xl'><i class="bi bi-linkedin"></i></span>
+          <span className='text-white text-4xl'><i className="bi bi-facebook"></i></span>
+          <span className='text-white text-3xl px-1 border border-white rounded-full rounded-l-full rounded-r-full mx-4'><i className="bi bi-twitter"></i></span>
+          <span className='text-white text-4xl'><i className="bi bi-linkedin"></i></span>
         </div>
       </div>
 

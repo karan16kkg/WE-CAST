@@ -10,6 +10,7 @@ const Tempapp = () => {
   const [temp,settemp] = useState("")
   const handleChange = (e) => {
     setdata({ ...data, [e.target.name]: e.target.value })
+    setcity(e.target.value);  
   }
   let z = data.country;
 
@@ -23,15 +24,24 @@ const Tempapp = () => {
       let x=response.data;
       console.log(x);
       let y = Math.round(x.main.temp - 273);
+      console.log(y);
       settemp(y)
     })
+  }
+
+  const handleKey = (e) =>
+  {
+    if (e.key == 'Enter')
+    {
+      getdata();
+    }
   }
   return (
     <>
       <Navbar />
       <div id='home' className='h-screen'>
         <div className='mt-14 h-14 items-center stati justify-center flex h-fit'>
-          <input value={data.country} className='w-1/3 h-12 text-xl rounded-full px-5 border-2 border-purple-500 outline-none ml-28 mt-8' placeholder='Search city..' type="search" name="country" onChange={handleChange} />
+          <input value={data.country} className='w-1/3 h-12 text-xl rounded-full px-5 border-2 border-purple-500 outline-none ml-28 mt-8' placeholder='Search city..' type="search" name="country" onKeyDown={handleKey} onChange={handleChange} />
           <button className='text-white text-3xl border border-purple-700 rounded-l-full rounded-r-full px-4 h-12 bg-purple-500 mt-8' onClick={getdata}>Search</button>
         </div>
         <div className='text-white absolote flex flex-col items-center mt-10'>
