@@ -1,1 +1,20 @@
-[{"id":1727504825193,"name":"karan","email":"karan123@gmail.com","password":"1234569"},{"id":1727712169345,"name":"karan","email":"karan1234@gmail.com","password":"122344552"},{"id":1727712269804,"name":"karan","email":"karan12345@gmail.com","password":"12"}]
+[
+    {
+        "id": 1727504825193,
+        "name": "karan",
+        "email": "karan123@gmail.com",
+        "password": "1234569"
+    },
+    {
+        "id": 1727712169345,
+        "name": "karan",
+        "email": "karan1234@gmail.com",
+        "password": "122344552"
+    },
+    {
+        "id": 1727712269804,
+        "name": "karan",
+        "email": "karan12345@gmail.com",
+        "password": "12"
+    }
+]
