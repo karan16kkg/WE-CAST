@@ -10,16 +10,10 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   const handleLogin = ()=>{
-    // navigate(
-    //   <Route>
-    //     path="/signup",
-    //     element={<Signup setgoing = {setgoing}/>}
-    //   </Route>
-    // )
     navigate("/signup")
   }
   return (
-    <div className='border border-black flex justify-between items-center fixed w-full'>
+    <div className='flex justify-between items-center fixed w-full top-0'>
       <div className='flex m-2 w-fit items-center ml-10'>
         <img className='h-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK3j-M3aoAjrvqoVKv1ltOJFVYDrIQAF1cfg&s" alt="Weather App" />
         <span className='text-purple-700 font-semibold text-2xl'>WE</span>
