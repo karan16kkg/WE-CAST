@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import "./Signup.css"
 import { useNavigate } from 'react-router-dom'
 const Signup = () => {
@@ -8,6 +9,7 @@ const Signup = () => {
   useEffect(() => {
     axios.get('https://weather-xj16.onrender.com/user/signup')
     .then((response)=>{
+      Cookies.set("User", response.data);
       console.log(response.data);
     })
   }, [])
@@ -25,6 +27,7 @@ const Signup = () => {
     axios.post("https://weather-xj16.onrender.coms/user/signup",form)
     .then((response)=>{
       const x = response.data;
+      Cookies.set("User", response.data);
       if(x.includes("user added successfully")){
         setaction("Login")
         setform({name:"",email:"",password:""})
@@ -36,6 +39,7 @@ const Signup = () => {
   const handleLogin = ()=>{
     axios.post("https://weather-xj16.onrender.com/user/login",form)
     .then((response)=>{
+      Cookies.set("User", response.data);
       const x = response.data
       if(x.includes("Login successfully")){
         navigate("/")

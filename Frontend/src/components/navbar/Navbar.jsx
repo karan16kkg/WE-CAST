@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import {HashLink as Link} from 'react-router-hash-link'
 import { Route, useNavigate } from 'react-router-dom'
 import "./Navbar.css"
 import Signup from '../signup/Signup'
+import Cookies from "js-cookie"
+
 const Navbar = () => {
   const [going, setgoing] = useState("home")
   const [logged, setlogged] = useState("yes")
+  const [loggedVal, setloggedVal] = useState("Login");
   const navigate = useNavigate()
 
   const handleLogin = ()=>{
+    if (loggedVal != "User")
     navigate("/signup")
   }
+
+  useEffect(() => {
+    if (Cookies.get("User") != null)
+    {
+      setloggedVal("User");
+    }
+  }, [])
+
   return (
     <div className='flex justify-between items-center fixed w-full top-0'>
       <div className='flex m-2 w-fit items-center ml-10'>
@@ -35,7 +47,7 @@ const Navbar = () => {
       </div>
 
       <div className='mr-10 text-white'>
-        {logged==="yes"?<button className='border border-white text-3xl px-3 py-1 rounded-l-full rounded-r-full' onClick={handleLogin}>Login</button>:<span>hello</span>}
+        <button className='border border-white text-3xl px-3 py-1 rounded-l-full rounded-r-full' onClick={handleLogin}>{loggedVal}</button>
       </div>
     </div>
   )
