@@ -29,7 +29,7 @@ user.post("/signup",(req,res,next)=>{
                 next(err);
             }
             else{
-                res.send("user added successfully");
+                res.send("Account Created successfully");
             }
         })
     }
