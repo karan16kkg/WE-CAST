@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <>
-    <div className='bg-gray-700 py-10 flex' id='contact'>
+    <div className='bg-gray-700 py-10 flex w-fit' id='contact'>
       <div className='w-1/3 ml-20'>
         <div className='flex m-2 w-fit items-center'>
           <img className='h-10 border-none rounded-full' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK3j-M3aoAjrvqoVKv1ltOJFVYDrIQAF1cfg&s" alt="Weather App" />
