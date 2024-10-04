@@ -92,7 +92,7 @@ const Signup = () => {
       {/* Same as */}
       <ToastContainer />
       <div className='border border-black h-screen'>
-        <div className='data w-1/2 border border-red-600'>
+        <div className='data w-1/2 border border-red-400'>
           <div className='w-1/4 absolute top-40 left-40'>
             <h1 className='text-4xl font-bold mb-1'>{action}</h1>
             {action === "Login" ? <div className='text-red-400'>Don't have an account?<button className='text-black' onClick={() => { setaction("Sign up") }} >Create Account</button></div> : <div className='text-red-400'>Already have an account?<button className='text-black' onClick={() => { setaction("Login") }}>Login here</button></div>}
