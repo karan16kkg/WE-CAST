@@ -2,7 +2,6 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import "./Signup.css"
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
