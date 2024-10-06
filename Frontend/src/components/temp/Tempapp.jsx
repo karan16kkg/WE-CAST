@@ -38,7 +38,7 @@ const Tempapp = () => {
   return (
     <>
       <Navbar />
-      <div id='home' className='h-screen'>
+      <div id='home' className='h-screen bg-gray-600'>
         <div className='mt-14 items-center stati justify-center flex h-fit'>
           <input value={data.country} className='w-1/3 h-12 text-xl rounded-full px-5 border-2 border-purple-500 outline-none ml-28 mt-8' placeholder='Search city..' type="search" name="country" onKeyDown={handleKey} onChange={handleChange} />
           <button className='text-white text-3xl border border-purple-700 rounded-l-full rounded-r-full px-4 h-12 bg-purple-500 mt-8' onClick={getdata}>Search</button>

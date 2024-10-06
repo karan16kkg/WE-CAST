@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import "./Signup.css"
 const Signup = () => {
 
   useEffect(() => {
@@ -90,33 +91,31 @@ const Signup = () => {
       />
       {/* Same as */}
       <ToastContainer />
-      <div className='border border-black h-screen'>
-        <div className='data w-1/2 border border-red-400'>
-          <div className='w-1/4 absolute top-40 left-40'>
-            <h1 className='text-4xl font-bold mb-1'>{action}</h1>
+      <div className='main absolute h-full md:absolute w-full md:h-full'>
+          <div className='w-fit sticky top-56 left-6 md:top-32 md:left-[83vh] md:sticky border border-purple-500 p-6 rounded-xl'>
+            <h1 className='text-4xl font-bold'>{action}</h1>
             {action === "Login" ? <div className='text-red-400'>Don't have an account?<button className='text-black' onClick={() => { setaction("Sign up") }} >Create Account</button></div> : <div className='text-red-400'>Already have an account?<button className='text-black' onClick={() => { setaction("Login") }}>Login here</button></div>}
 
             {action === "Sign up" ? <div className='mt-5'>
-              <label>Name</label><br />
-              <input value={form.name} className='w-80 h-10 rounded-lg bg-transparent outline-none border border-blue-500 px-3' type="text" name="name" onChange={handleChange} />
+              <label className='text-xl ml-2'>Name</label><br />
+              <input value={form.name} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-purple-500 px-3 text-xl' type="text" name="name" onChange={handleChange} />
             </div> : <div></div>}
 
             <div className='mt-3'>
-              <label>Email Address</label><br />
-              <input value={form.email} className='w-80 h-10 rounded-lg bg-transparent outline-none border border-blue-500 px-3' type="email" name="email" onChange={handleChange} />
+              <label className='text-xl ml-2'>Email Address</label><br />
+              <input value={form.email} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-purple-500 px-3 text-xl' type="email" name="email" onChange={handleChange} />
             </div>
 
             <div className='mt-3'>
-              <label>Password</label><br />
-              <input value={form.password} className='w-80 h-10 rounded-lg bg-transparent outline-none border border-blue-500 px-3' type="password" name="password" onChange={handleChange} />
+              <label className='text-xl ml-2'>Password</label><br />
+              <input value={form.password} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-purple-500 px-3 text-xl' type="password" name="password" onChange={handleChange} />
             </div>
 
             <div>
-              {action === "Sign up" ? <button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleSubmit}>Sign up</button> : <button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleLogin}>Login</button>}
+              {action === "Sign up" ? <button className='border border-white mt-5 w-2/3 ml-14 h-10 text-white rounded-xl bg-slate-800' onClick={handleSubmit}>Sign up</button> : <button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleLogin}>Login</button>}
             </div>
           </div>
         </div>
-      </div>
     </>
   )
 }
