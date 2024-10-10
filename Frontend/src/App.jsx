@@ -6,6 +6,7 @@ import Navbar from './components/navbar/Navbar'
 import Footer from './components/Footer'
 import About from './components/About'
 import Signup from './components/signup/Signup'
+import Forgot from './components/signup/Forgot'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -17,6 +18,7 @@ function App() {
       <Route path='/contact' element={<Footer/>} />
       <Route path='/about' element={<About/>} />
       <Route path='/signup' element={<Signup/>} />
+      <Route path='/forgot' element={<Forgot/>}/>
     </Routes>
     </>
   )

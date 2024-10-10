@@ -74,7 +74,10 @@ const Signup = () => {
         console.log(response.data);
       })
   }
-  console.log(form.name);
+  
+  const handleForgot = ()=>{
+    navigate("/forgot")
+  }
   return (
     <>
       <ToastContainer
@@ -91,28 +94,31 @@ const Signup = () => {
       />
       {/* Same as */}
       <ToastContainer />
-      <div className='main absolute h-full md:absolute w-full md:h-full'>
-          <div className='w-fit sticky top-56 left-6 md:top-32 md:left-[83vh] md:sticky border border-purple-500 p-6 rounded-xl'>
+      <div className='main flex items-center justify-center absolute h-full md:absolute w-full md:h-full'>
+          <div className='w-fit sticky md:sticky border-2 border-blue-950 p-6 rounded-xl shadow-slate-900 shadow-md '>
             <h1 className='text-4xl font-bold'>{action}</h1>
-            {action === "Login" ? <div className='text-red-400'>Don't have an account?<button className='text-black' onClick={() => { setaction("Sign up") }} >Create Account</button></div> : <div className='text-red-400'>Already have an account?<button className='text-black' onClick={() => { setaction("Login") }}>Login here</button></div>}
+            {action === "Login" ? <div className='text-red-500'>Don't have an account?<button className='text-black' onClick={() => { setaction("Sign up") }} >Create Account</button></div> : <div className='text-red-500'>Already have an account?<button className='text-black' onClick={() => { setaction("Login") }}>Login here</button></div>}
 
             {action === "Sign up" ? <div className='mt-5'>
               <label className='text-xl ml-2'>Name</label><br />
-              <input value={form.name} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-purple-500 px-3 text-xl' type="text" name="name" onChange={handleChange} />
+              <input value={form.name} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-slate-700 px-3 text-xl' type="text" name="name" onChange={handleChange} />
             </div> : <div></div>}
 
             <div className='mt-3'>
               <label className='text-xl ml-2'>Email Address</label><br />
-              <input value={form.email} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-purple-500 px-3 text-xl' type="email" name="email" onChange={handleChange} />
+              <input value={form.email} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-slate-700 px-3 text-xl' type="email" name="email" onChange={handleChange} />
             </div>
 
             <div className='mt-3'>
-              <label className='text-xl ml-2'>Password</label><br />
-              <input value={form.password} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-purple-500 px-3 text-xl' type="password" name="password" onChange={handleChange} />
+              <div className='flex justify-between'>
+                <label className='text-xl ml-2'>Password</label>
+                {action === "Login" ? <button className='text-red-600' onClick={handleForgot}>Forgot password?</button> : <div></div> }
+              </div>
+              <input value={form.password} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-slate-700 px-3 text-xl' type="password" name="password" onChange={handleChange} />
             </div>
 
             <div>
-              {action === "Sign up" ? <button className='border border-white mt-5 w-2/3 ml-14 h-10 text-white rounded-xl bg-slate-800' onClick={handleSubmit}>Sign up</button> : <button className='border border-white mt-5 w-2/3 ml-10 h-10 text-white rounded-xl bg-slate-800' onClick={handleLogin}>Login</button>}
+              {action === "Sign up" ? <button className='border border-white mt-5 w-2/3 ml-14 h-10 text-white rounded-xl bg-slate-800' onClick={handleSubmit}>Sign up</button> : <button className='border border-white mt-5 w-2/3 ml-14 h-10 text-white rounded-xl bg-slate-800' onClick={handleLogin}>Login</button>}
             </div>
           </div>
         </div>

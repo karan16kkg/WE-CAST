@@ -11,9 +11,9 @@ app.use(cors())
 app.use(express.json())
 app.use('/user',user)
 app.use("/user",login)
-app.get("/",(req,res)=>{
-    res.send("Hello");
-})
+// app.get("/",(req,res)=>{
+//     res.send("Hello");
+// })
 
 app.use(ErrorHandler)
 
