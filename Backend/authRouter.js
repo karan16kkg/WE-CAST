@@ -26,23 +26,28 @@ login.post("/login",(req,res,next)=>{
 })
 
 login.post("/forgot",(req,res,next)=>{
-    let {email,password} = req.body;
+    let {email,password,confirm} = req.body;
     let database = data;
-    let index = database.findIndex((ele)=>ele.email == email);
-
-    if(index>=0){
-        database[index].password = password;
-        fs.writeFile("data.json",JSON.stringify(database),(err)=>{
-            if(err){
-                next(err);
-            }
-            else{
-                res.send("Password change successfully");
-            }
-        })
+    if(password == confirm){
+        let index = database.findIndex((ele)=>ele.email == email);
+        if(index>=0){
+    
+            database[index].password = password;
+            fs.writeFile("data.json",JSON.stringify(database),(err)=>{
+                if(err){
+                    next(err);
+                }
+                else{
+                    res.send("Password change successfully");
+                }
+            })
+        }
+        else{
+            next(CreateError(404,"User Not Found"));
+        }
     }
     else{
-        next(CreateError(404,"User Not Found"));
+        next(CreateError(208,"Password Not Same"))
     }
 })
 
