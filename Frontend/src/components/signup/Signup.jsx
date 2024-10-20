@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -6,17 +6,21 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./Signup.css"
+import { UserContext } from '../../App'
+
 const Signup = () => {
 
+  
   useEffect(() => {
     axios.get('https://weather-xj16.onrender.com/user/signup')
-      .then((response) => {
-        // Cookies.set("User", response.data);
-        console.log(response.data);
-      })
+    .then((response) => {
+      // Cookies.set("User", response.data);
+      console.log(response.data);
+    })
   }, [])
-
-
+  
+  
+  const {state, dispatch} = useContext(UserContext)
   const [form, setform] = useState({ name: "", email: "", password: "" })
   const [action, setaction] = useState("Login")
 
@@ -66,6 +70,7 @@ const Signup = () => {
           theme: "light",
         });
         if (x.includes("Login successfully")) {
+          dispatch({type:"USER", payload:true})
           setTimeout(() => {
             navigate("/")
             setform({name:"",email:"",password:""})
@@ -95,18 +100,18 @@ const Signup = () => {
       {/* Same as */}
       <ToastContainer />
       <div className='main flex items-center justify-center absolute h-full md:absolute w-full md:h-full'>
-          <div className='w-fit sticky md:sticky border-2 border-blue-950 p-6 rounded-xl shadow-slate-900 shadow-md '>
+          <div className='w-fit border-2 border-blue-950 p-6 rounded-xl shadow-slate-900 shadow-md '>
             <h1 className='text-4xl font-bold'>{action}</h1>
             {action === "Login" ? <div className='text-red-500'>Don't have an account?<button className='text-black' onClick={() => { setaction("Sign up") }} >Create Account</button></div> : <div className='text-red-500'>Already have an account?<button className='text-black' onClick={() => { setaction("Login") }}>Login here</button></div>}
 
             {action === "Sign up" ? <div className='mt-5'>
               <label className='text-xl ml-2'>Name</label><br />
-              <input value={form.name} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-slate-700 px-3 text-xl' type="text" name="name" onChange={handleChange} />
+              <input value={form.name} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-slate-700 px-3 text-xl placeholder:text-gray-600' placeholder='Enter name...' type="text" name="name" onChange={handleChange} />
             </div> : <div></div>}
 
             <div className='mt-3'>
               <label className='text-xl ml-2'>Email Address</label><br />
-              <input value={form.email} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-slate-700 px-3 text-xl' type="email" name="email" onChange={handleChange} />
+              <input value={form.email} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-slate-700 px-3 text-xl placeholder:text-gray-600' placeholder='Enter email...' type="email" name="email" onChange={handleChange} />
             </div>
 
             <div className='mt-3'>
@@ -114,7 +119,7 @@ const Signup = () => {
                 <label className='text-xl ml-2'>Password</label>
                 {action === "Login" ? <button className='text-red-600' onClick={handleForgot}>Forgot password?</button> : <div></div> }
               </div>
-              <input value={form.password} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-slate-700 px-3 text-xl' type="password" name="password" onChange={handleChange} />
+              <input value={form.password} className='w-80 h-14 rounded-lg bg-transparent outline-none border-2 border-slate-700 px-3 text-xl placeholder:text-gray-600' placeholder='Enter password...' type="password" name="password" onChange={handleChange} />
             </div>
 
             <div>

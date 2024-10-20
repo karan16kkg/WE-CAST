@@ -1,37 +1,40 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useContext } from 'react'
 import { useState } from 'react'
 import {HashLink as Link} from 'react-router-hash-link'
 import { Route, useNavigate } from 'react-router-dom'
 import "./Navbar.css"
-import Signup from '../signup/Signup'
-import Cookies from "js-cookie"
+import { UserContext } from '../../App'
 
 const Navbar = () => {
+
+  const {state, dispatch} = useContext(UserContext)
+
   const [going, setgoing] = useState("home")
-  const [loggedVal, setloggedVal] = useState("Login");
+  const [loggedVal, setloggedVal] = useState("");
   const navigate = useNavigate()
 
   const handleLogin = ()=>{
-    // if (loggedVal != "User")
     navigate("/signup")
   }
 
-  // useEffect(() => {
-  //   if (Cookies.get("User") != null)
-  //   {
-  //     setloggedVal("User");
-  //   }
-  // }, [])
+  console.log(state)
+
+  useEffect(() => {
+    if(state){
+      setloggedVal("yes")
+    }
+  }, [state])
+  
 
   return (
-    <div className='flex justify-between items-center fixed w-full top-0 bg-orange-800'>
-      <div className='flex m-2 w-fit items-center ml-10'>
+    <div className='flex justify-between fixed items-center w-full top-0 bg-slate-800'>
+      <div className='flex m-2 w-fit items-center ml:2 md:ml-10'>
         <img className='h-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK3j-M3aoAjrvqoVKv1ltOJFVYDrIQAF1cfg&s" alt="Weather App" />
         <span className='text-purple-700 font-semibold text-2xl'>WE</span>
         <span className='text-gray-400 text-2xl'>CAST</span>
       </div>
 
-      <div className='flex gap-16 list-none'>
+      <div className='hidden md:flex gap-16 list-none'>
         <ul className='flex gap-10 text-2xl text-white'>
           <li className='hover:text-purple-600'>
             <Link smooth onClick={()=>{setgoing("home")}} to="#home" className={going==="home"?"active":""}>Home</Link>
@@ -45,9 +48,13 @@ const Navbar = () => {
         </ul>
       </div>
 
-      <div className='mr-10 text-white'>
-        <button className='border border-white text-3xl px-3 py-1 rounded-l-full rounded-r-full' onClick={handleLogin}>{loggedVal}</button>
+      <div className='mr-5 md:mr-10 text-white'>
+        {loggedVal != "yes"?<button className='border border-white text-3xl px-3 py-1 rounded-l-full rounded-r-full' onClick={handleLogin}>Login</button>:
+        <div>
+          <img className='border-2 rounded-full p-2 ' src="/user.svg" alt="" />
+        </div>}
       </div>
+      
     </div>
   )
 }
