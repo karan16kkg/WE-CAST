@@ -115,8 +115,7 @@ const Tempapp = () => {
 
   return (
     <>
-      <Navbar />
-      <div id='home' className='h-full md:h-screen w-screen mt-14' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div id='home' className='h-full md:h-screen w-screen overflow-hidden' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
 
         <div className='block md:flex w-full'>
           <div className='text-white flex relative w-full md:w-1/2 z-0'>
@@ -137,40 +136,40 @@ const Tempapp = () => {
           </div>
         </div>
 
-        <div className='flex flex-col items-center w-full mt-10 md:mt-0'>
+        <div className='flex flex-col items-center w-full mt-14'>
           <div className='w-2/3 md:w-2/4'>
             <h1 className=' italic text-white text-5xl font-bold'>WE CAST</h1>
           </div>
-          <div className='w-3/4 md:w-2/4 flex relative'>
+          <div className='w-full md:w-2/4 flex relative mt-5 px-4 md:px-0'>
             <input value={data.city} className='w-full h-14 rounded-md text-2xl italic pl-5 text-white placeholder-white outline-none border-none' style={{backgroundColor:clr}} type="search" name="city" placeholder='Search City...' onChange={handleChange} onKeyDown={handleKey} />
-            <img className='absolute right-3 top-3 cursor-pointer' onClick={getData} src="search.svg" alt="" />
+            <img className='absolute right-8 top-3 cursor-pointer' onClick={getData} src="search.svg" alt="" />
           </div>
         </div>
 
-        <div className='mt-24 block md:flex'>
+        <div className='mt-20 md:mt-24 block md:flex'>
           <div className='w-full md:w-1/2 flex items-center justify-center'>
             <h1 className='text-5xl md:text-7xl text-white font-bold'>{Time}</h1>
           </div>
 
-          <div className='w-full md:w-1/2'>
+          <div className='w-full md:w-1/2 mt-10 md:mt-0'>
             <div className='flex'>
               <div className='text-white w-1/2 flex flex-col items-center'>
-                <h1 className='text-3xl md:text-5xl font-bold'>WIND</h1>
+                <h1 className='text-2xl md:text-5xl font-bold'>WIND</h1>
                 <p className='text-xl font-bold'>{temp.wind} km/h</p>
               </div>
               <div className='text-white w-1/2 flex flex-col items-center'>
-                <h1 className='text-3xl md:text-5xl font-bold'>HUMIDITY</h1>
+                <h1 className='text-2xl md:text-5xl font-bold'>HUMIDITY</h1>
                 <p className='text-xl font-bold'>{temp.humidity} %</p>
               </div>
             </div>
             
             <div className='flex'>
               <div className='text-white w-1/2 flex flex-col items-center'>
-                <h1 className='text-3xl md:text-5xl font-bold'>CLOUDS</h1>
+                <h1 className='text-2xl md:text-5xl font-bold'>CLOUDS</h1>
                 <p className='text-xl font-bold'>{temp.clouds} %</p>
               </div>
               <div className='text-white w-1/2 flex flex-col items-center'>
-                <h1 className='text-3xl md:text-5xl font-bold'>VISIBILITY</h1>
+                <h1 className='text-2xl md:text-5xl font-bold'>VISIBILITY</h1>
                 <p className='text-xl font-bold'>{temp.visibility} %</p>
               </div>
             </div>
@@ -179,7 +178,6 @@ const Tempapp = () => {
         </div>
 
       </div>
-      {/* <Footer /> */}
     </>
   )
 }
