@@ -8,18 +8,21 @@ import axios from 'axios'
 const image = [
   '/cloudy.jpg',
   '/rainy.jpg',
-  '/clear.jpg'
+  '/clear.jpg',
+  'sun.svg',
+  'cloudy_sun.png'
 ]
 const Tempapp = () => {
   let x;
-  const key = "a322d39c25aa93e12bfe3ff1a6c68891"
-  const city = "chandigarh"
   const [data, setdata] = useState({ city: "" })
   const [background, setbackground] = useState();
-  const [temp, settemp] = useState({ name: "", tempe: "", wind: "", humidity: "" })
+  const [Sun, setSun] = useState()
+  const [temp, settemp] = useState({ name: "", tempe: "", wind: "", humidity: "",clouds:"",visibility:"" })
   const [bg, setbg] = useState("Clear")
   const [latitude, setlatitude] = useState("")
   const [longitude, setlongitude] = useState("")
+  const [clr, setclr] = useState("")
+  const [Time, setTime] = useState(new Date().toLocaleTimeString())
 
   useEffect(() => {
     const fun = async () => {
@@ -45,7 +48,9 @@ const Tempapp = () => {
               name: x.name,
               tempe: (x.main.temp - 273).toFixed(0),
               wind: (x.wind.speed * 3.6).toFixed(2),
-              humidity: x.main.humidity
+              humidity: x.main.humidity,
+              clouds:x.clouds.all,
+              visibility:(x.visibility/1000).toFixed(1)
             })
           })
       }
@@ -68,7 +73,6 @@ const Tempapp = () => {
   const getData = async () => {
     await axios.post('https://weather-xj16.onrender.com/api', data)
       .then((response) => {
-        // console.log(response.data.city.name);
         x = response.data
       })
     console.log(x);
@@ -77,53 +81,103 @@ const Tempapp = () => {
       name: x.name,
       tempe: (x.main.temp - 273).toFixed(0),
       wind: (x.wind.speed * 3.6).toFixed(2),
-      humidity: x.main.humidity
+      humidity: x.main.humidity,
+      clouds:x.clouds.all,
+      visibility:(x.visibility/1000).toFixed(1)
     })
   }
 
   useEffect(() => {
     if (bg == "Clouds") {
       setbackground([image[0]]);
+      setSun([image[4]])
+      setclr("#000000")
     }
     if (bg == "Rain") {
       setbackground([image[1]])
+      setSun("");
+      setclr("#D3D3D3")
     }
     if (bg == "Clear") {
       setbackground([image[2]])
+      setSun([image[3]])
+      setclr("#DDA84C")
     }
   }, [bg])
 
+  useEffect(()=>{
+    const timer = setTimeout(() => {
+      setTime(new Date().toLocaleTimeString())
+    }, 1000);
+
+    return () => clearInterval(timer);
+  })
 
   return (
     <>
       <Navbar />
-      <div id='home' className='h-screen mt-14' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className='flex justify-center'>
-          <input value={data.city} className='h-12 w-2/3 md:w-1/3 outline-none rounded-full text-3xl px-8 mt-10 border-2 border-slate-600 shadow-slate-800 shadow-xl' type="search" name="city" placeholder='Search City...' onChange={handleChange} onKeyDown={handleKey} />
-          <button className='text-white mt-10 bg-gray-900 rounded-full text-2xl w-24 shadow-black drop-shadow-xl' onClick={getData}>Search</button>
-        </div>
+      <div id='home' className='h-full md:h-screen w-screen mt-14' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
 
-        <div className='md:flex mt-8 w-full justify-between'>
-          <div className='px-5 w-full flex flex-col items-center pb-8'>
-            <h1 className=' text-5xl md:text-7xl mt-10'>{temp.name}</h1>
-            <div className='border flex flex-col mt-16 bg-white gap-2 p-3 rounded-lg'>
-              <div className='flex items-center text-xl'>
-                <img className='border p-2 bg-stone-300 rounded-xl' src="/wind.svg" alt="" />
-                <span className=' ml-4'>Wind {temp.wind}km/h</span>
-              </div>
-              <div className='flex items-center text-xl'>
-                <img className='border p-2 bg-stone-300 rounded-xl' src="/humidity.svg" alt="" />
-                <span className=' ml-4'>Humidity {temp.humidity}%</span>
-              </div>
-            </div>
-          </div>
-          <div className='flex justify-center w-full items-center'>
-            <h1 className='text-9xl'>
+        <div className='block md:flex w-full'>
+          <div className='text-white flex relative w-full md:w-1/2 z-0'>
+            <img className='h-52 ml-10 mt-5' src={Sun} alt="" />
+            <h1 className='text-9xl mt-5 absolute left-40 top-6'>
               {temp.tempe}
               <sup className='text-7xl ml-2'>°C</sup>
             </h1>
           </div>
+
+          <div className='md:w-1/2 text-white flex flex-col items-center'>
+            <h1 className=' text-5xl md:text-8xl mt-10'>{temp.name}</h1>
+            <p className='text-3xl'>{new Date().toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}</p>
+          </div>
         </div>
+
+        <div className='flex flex-col items-center w-full mt-10 md:mt-0'>
+          <div className='w-2/3 md:w-2/4'>
+            <h1 className=' italic text-white text-5xl font-bold'>WE CAST</h1>
+          </div>
+          <div className='w-3/4 md:w-2/4 flex relative'>
+            <input value={data.city} className='w-full h-14 rounded-md text-2xl italic pl-5 text-white placeholder-white outline-none border-none' style={{backgroundColor:clr}} type="search" name="city" placeholder='Search City...' onChange={handleChange} onKeyDown={handleKey} />
+            <img className='absolute right-3 top-3 cursor-pointer' onClick={getData} src="search.svg" alt="" />
+          </div>
+        </div>
+
+        <div className='mt-24 block md:flex'>
+          <div className='w-full md:w-1/2 flex items-center justify-center'>
+            <h1 className='text-5xl md:text-7xl text-white font-bold'>{Time}</h1>
+          </div>
+
+          <div className='w-full md:w-1/2'>
+            <div className='flex'>
+              <div className='text-white w-1/2 flex flex-col items-center'>
+                <h1 className='text-3xl md:text-5xl font-bold'>WIND</h1>
+                <p className='text-xl font-bold'>{temp.wind} km/h</p>
+              </div>
+              <div className='text-white w-1/2 flex flex-col items-center'>
+                <h1 className='text-3xl md:text-5xl font-bold'>HUMIDITY</h1>
+                <p className='text-xl font-bold'>{temp.humidity} %</p>
+              </div>
+            </div>
+            
+            <div className='flex'>
+              <div className='text-white w-1/2 flex flex-col items-center'>
+                <h1 className='text-3xl md:text-5xl font-bold'>CLOUDS</h1>
+                <p className='text-xl font-bold'>{temp.clouds} %</p>
+              </div>
+              <div className='text-white w-1/2 flex flex-col items-center'>
+                <h1 className='text-3xl md:text-5xl font-bold'>VISIBILITY</h1>
+                <p className='text-xl font-bold'>{temp.visibility} %</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
       {/* <Footer /> */}
     </>

@@ -27,7 +27,7 @@ const Navbar = () => {
   
 
   return (
-    <div className='flex justify-between fixed items-center w-full top-0 bg-slate-800'>
+    <div className='flex justify-between fixed items-center w-full top-0 bg-slate-800 z-10'>
       <div className='flex m-2 w-fit items-center ml:2 md:ml-10'>
         <img className='h-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK3j-M3aoAjrvqoVKv1ltOJFVYDrIQAF1cfg&s" alt="Weather App" />
         <span className='text-purple-700 font-semibold text-2xl'>WE</span>

@@ -100,7 +100,7 @@ const Signup = () => {
       {/* Same as */}
       <ToastContainer />
       <div className='main flex items-center justify-center absolute h-full md:absolute w-full md:h-full'>
-          <div className='w-fit border-2 border-blue-950 p-6 rounded-xl shadow-slate-900 shadow-md '>
+          <div className='w-fit border-2 border-blue-950 p-6 rounded-xl shadow-slate-900 shadow-md'>
             <h1 className='text-4xl font-bold'>{action}</h1>
             {action === "Login" ? <div className='text-red-500'>Don't have an account?<button className='text-black' onClick={() => { setaction("Sign up") }} >Create Account</button></div> : <div className='text-red-500'>Already have an account?<button className='text-black' onClick={() => { setaction("Login") }}>Login here</button></div>}
 
