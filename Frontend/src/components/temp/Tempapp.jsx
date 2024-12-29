@@ -10,19 +10,23 @@ const image = [
   '/rainy.jpg',
   '/clear.jpg',
   'sun.svg',
-  'cloudy_sun.png'
+  'cloudy_sun.png',
+  'night_clear.png',
+  'night_cloudy.png',
+  'night_rain.png',
+  'moon.png'
 ]
 const Tempapp = () => {
   let x;
   const [data, setdata] = useState({ city: "" })
   const [background, setbackground] = useState();
   const [Sun, setSun] = useState()
-  const [temp, settemp] = useState({ name: "", tempe: "", wind: "", humidity: "",clouds:"",visibility:"" })
+  const [temp, settemp] = useState({ name: "", tempe: "", wind: "", humidity: "", clouds: "", visibility: "", current: "" })
   const [bg, setbg] = useState("Clear")
   const [latitude, setlatitude] = useState("")
   const [longitude, setlongitude] = useState("")
   const [clr, setclr] = useState("")
-  const [Time, setTime] = useState(new Date().toLocaleTimeString())
+  const [Time, setTime] = useState(new Date().toLocaleTimeString("en-US", { hour12: false }));
 
   useEffect(() => {
     const fun = async () => {
@@ -49,8 +53,9 @@ const Tempapp = () => {
               tempe: (x.main.temp - 273).toFixed(0),
               wind: (x.wind.speed * 3.6).toFixed(2),
               humidity: x.main.humidity,
-              clouds:x.clouds.all,
-              visibility:(x.visibility/1000).toFixed(1)
+              clouds: x.clouds.all,
+              visibility: (x.visibility / 1000).toFixed(1),
+              current: x.weather[0].main
             })
           })
       }
@@ -82,32 +87,74 @@ const Tempapp = () => {
       tempe: (x.main.temp - 273).toFixed(0),
       wind: (x.wind.speed * 3.6).toFixed(2),
       humidity: x.main.humidity,
-      clouds:x.clouds.all,
-      visibility:(x.visibility/1000).toFixed(1)
+      clouds: x.clouds.all,
+      visibility: (x.visibility / 1000).toFixed(1)
     })
   }
 
-  useEffect(() => {
-    if (bg == "Clouds") {
-      setbackground([image[0]]);
-      setSun([image[4]])
-      setclr("#000000")
-    }
-    if (bg == "Rain") {
-      setbackground([image[1]])
-      setSun("");
-      setclr("#D3D3D3")
-    }
-    if (bg == "Clear") {
-      setbackground([image[2]])
-      setSun([image[3]])
-      setclr("#DDA84C")
-    }
-  }, [bg])
+  // useEffect(() => {
+  //   if (bg == "Clouds") {
+  //     setbackground([image[0]]);
+  //     setSun([image[4]])
+  //     setclr("#000000")
+  //   }
+  //   if (bg == "Rain") {
+  //     setbackground([image[1]])
+  //     setSun("");
+  //     setclr("#D3D3D3")
+  //   }
+  //   if (bg == "Clear") {
+  //     setbackground([image[2]])
+  //     setSun([image[3]])
+  //     setclr("#DDA84C")
+  //   }
+  // }, [bg])
 
-  useEffect(()=>{
+  useEffect(() => {
+    // const currentHour = 8;
+    const currentHour = parseInt(Time.split(":")[0], 10);
+    if (currentHour >= 18 || currentHour < 6) {
+      if (bg == "Clear") {
+        setbackground([image[5]]);
+        setSun([image[8]])
+        setclr("#000000")
+      }
+
+      if (bg == "Clouds") {
+        setbackground([image[6]]);
+        setSun([image[4]])
+        setclr("#000000")
+      }
+
+      if (bg == "Rain") {
+        setbackground([image[7]]);
+        setclr("#000000")
+      }
+
+    }
+    else {
+      if (bg == "Clouds") {
+        setbackground([image[0]]);
+        setSun([image[4]])
+        setclr("#000000")
+      }
+      if (bg == "Rain") {
+        setbackground([image[1]])
+        setSun("");
+        setclr("#D3D3D3")
+      }
+      if (bg == "Clear") {
+        setbackground([image[2]])
+        setSun([image[3]])
+        setclr("#DDA84C")
+      }
+    }
+  }, [Time, bg]);
+
+
+  useEffect(() => {
     const timer = setTimeout(() => {
-      setTime(new Date().toLocaleTimeString())
+      setTime(new Date().toLocaleTimeString("en-US", { hour12: false }))
     }, 1000);
 
     return () => clearInterval(timer);
@@ -118,16 +165,21 @@ const Tempapp = () => {
       <div id='home' className='h-full md:h-screen w-screen overflow-hidden' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
 
         <div className='block md:flex w-full'>
-          <div className='text-white flex relative w-full md:w-1/2 z-0'>
-            <img className='h-52 ml-10 mt-5' src={Sun} alt="" />
-            <h1 className='text-9xl mt-5 absolute left-40 top-6'>
-              {temp.tempe}
-              <sup className='text-7xl ml-2'>°C</sup>
-            </h1>
+          <div className='text-white relative w-full md:w-1/2 z-0'>
+            <div className='flex  md:h-40'>
+              <img className='h-52 ml-10 mt-5' src={Sun} alt="" />
+              <h1 className='text-9xl mt-5 absolute left-40 top-6'>
+                {temp.tempe}
+                <sup className='text-7xl ml-2'>°C</sup>
+              </h1>
+            </div>
+            <div>
+              <h1 className='text-7xl flex justify-center'>{temp.current}</h1>
+            </div>
           </div>
 
           <div className='md:w-1/2 text-white flex flex-col items-center'>
-            <h1 className=' text-5xl md:text-8xl mt-10'>{temp.name}</h1>
+            <h1 className=' text-5xl md:text-8xl mt-20'>{temp.name}</h1>
             <p className='text-3xl'>{new Date().toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
@@ -136,22 +188,22 @@ const Tempapp = () => {
           </div>
         </div>
 
-        <div className='flex flex-col items-center w-full mt-14'>
-          <div className='w-2/3 md:w-2/4'>
+        <div className='flex flex-col items-center w-full mt-14 md:mt-40 lg:mt-14'>
+          <div className='w-2/3 md:w-3/4 lg:w-2/4'>
             <h1 className=' italic text-white text-5xl font-bold'>WE CAST</h1>
           </div>
-          <div className='w-full md:w-2/4 flex relative mt-5 px-4 md:px-0'>
-            <input value={data.city} className='w-full h-14 rounded-md text-2xl italic pl-5 text-white placeholder-white outline-none border-none' style={{backgroundColor:clr}} type="search" name="city" placeholder='Search City...' onChange={handleChange} onKeyDown={handleKey} />
+          <div className='w-full md:w-3/4 lg:w-2/4 flex relative mt-5 px-4 md:px-0'>
+            <input value={data.city} className='w-full h-14 rounded-md text-2xl italic pl-5 text-white placeholder-white outline-none border-none' style={{ backgroundColor: clr }} type="search" name="city" placeholder='Search City...' onChange={handleChange} onKeyDown={handleKey} />
             <img className='absolute right-8 top-3 cursor-pointer' onClick={getData} src="search.svg" alt="" />
           </div>
         </div>
 
-        <div className='mt-20 md:mt-24 block md:flex'>
-          <div className='w-full md:w-1/2 flex items-center justify-center'>
+        <div className='mt-20 md:mt-24 block md:block lg:flex'>
+          <div className='w-full md:w-full lg:w-1/2 flex items-center justify-center'>
             <h1 className='text-5xl md:text-7xl text-white font-bold'>{Time}</h1>
           </div>
 
-          <div className='w-full md:w-1/2 mt-10 md:mt-0'>
+          <div className='w-full md:w-full lg:w-1/2 mt-10 md:mt-20 lg:mt-0'>
             <div className='flex'>
               <div className='text-white w-1/2 flex flex-col items-center'>
                 <h1 className='text-2xl md:text-5xl font-bold'>WIND</h1>
@@ -162,7 +214,7 @@ const Tempapp = () => {
                 <p className='text-xl font-bold'>{temp.humidity} %</p>
               </div>
             </div>
-            
+
             <div className='flex'>
               <div className='text-white w-1/2 flex flex-col items-center'>
                 <h1 className='text-2xl md:text-5xl font-bold'>CLOUDS</h1>
