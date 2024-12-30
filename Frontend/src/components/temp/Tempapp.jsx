@@ -88,7 +88,8 @@ const Tempapp = () => {
       wind: (x.wind.speed * 3.6).toFixed(2),
       humidity: x.main.humidity,
       clouds: x.clouds.all,
-      visibility: (x.visibility / 1000).toFixed(1)
+      visibility: (x.visibility / 1000).toFixed(1),
+      current: x.weather[0].main
     })
   }
 
