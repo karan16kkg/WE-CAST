@@ -236,11 +236,11 @@ const Tempapp = () => {
           </div>
         </div>
 
-        {loggedVal!="yes"?<div className='mt-36 mb-24 flex flex-col items-center w-full border-2 border-red-700'>
+        {loggedVal!="yes"?<div className='mt-36 mb-24 flex flex-col items-center w-full'>
           <h1 className='text-xl md:text-3xl lg:text-5xl  text-white'>Log in to access the 5-day weather forecast</h1>
           <button className='mt-28 mb-20 text-white text-3xl px-12 py-4 rounded-full' style={{ backgroundColor: clr }} onClick={handleLogin}>Login</button>
         </div>:
-        <div className='flex mt-36 gap-5 lg:gap-10 px-10 mb-24 overflow-scroll w-full'>
+        <div className='sc flex mt-36 gap-5 lg:gap-10 px-10 mb-24'>
           {weatherData && weatherData.map((days, index) => {
             return <div key={index} className='text-white w-full flex flex-col items-center py-4 rounded-2xl px-5 scroll-smooth scroll-m-0' style={{ backgroundColor: clr }}>
               <div className='w-full flex justify-center'>{days.date}

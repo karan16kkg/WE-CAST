@@ -1,0 +1,6 @@
+.sc{
+    overflow-x: scroll;
+}
+::-webkit-scrollbar{
+    height: 0;
+}
