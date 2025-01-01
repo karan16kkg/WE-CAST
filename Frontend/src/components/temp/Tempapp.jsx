@@ -1,9 +1,10 @@
 import React from 'react'
 import "./Tempapp.css"
-import { useState, useEffect } from 'react'
-import Navbar from '../navbar/Navbar';
-import Footer from '../Footer';
+import { useState, useEffect,useContext } from 'react'
+import {HashLink as Link} from 'react-router-hash-link'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../App'
 
 const image = [
   '/cloudy.jpg',
@@ -17,6 +18,10 @@ const image = [
   'moon.png'
 ]
 const Tempapp = () => {
+
+  const {state, dispatch} = useContext(UserContext)
+  const [loggedVal, setloggedVal] = useState("");
+
   let x;
   const [data, setdata] = useState({ city: "" })
   const [background, setbackground] = useState();
@@ -27,6 +32,7 @@ const Tempapp = () => {
   const [longitude, setlongitude] = useState("")
   const [clr, setclr] = useState("")
   const [Time, setTime] = useState(new Date().toLocaleTimeString("en-US", { hour12: false }));
+  const [weatherData, setWeatherData] = useState(null);
 
   useEffect(() => {
     const fun = async () => {
@@ -37,7 +43,6 @@ const Tempapp = () => {
     }
     fun();
   }, [])
-
 
   useEffect(() => {
     const fun1 = async () => {
@@ -58,9 +63,13 @@ const Tempapp = () => {
               current: x.weather[0].main
             })
           })
+          const response2 = await axios.post("https://weather-xj16.onrender.com/weather_place",
+            {latitude,longitude}
+          );
+          // console.log(response2.data)
+          setWeatherData(response2.data);
       }
     }
-
     fun1()
   }, [latitude, longitude])
 
@@ -74,13 +83,11 @@ const Tempapp = () => {
     }
   }
 
-  // let x;
   const getData = async () => {
     await axios.post('https://weather-xj16.onrender.com/api', data)
       .then((response) => {
         x = response.data
       })
-    console.log(x);
     setbg(x.weather[0].main)
     settemp({
       name: x.name,
@@ -91,28 +98,16 @@ const Tempapp = () => {
       visibility: (x.visibility / 1000).toFixed(1),
       current: x.weather[0].main
     })
+
+    await axios.post("https://weather-xj16.onrender.com/weather", data)
+      .then((response2) => {
+        setWeatherData(response2.data);
+      })
+
   }
 
-  // useEffect(() => {
-  //   if (bg == "Clouds") {
-  //     setbackground([image[0]]);
-  //     setSun([image[4]])
-  //     setclr("#000000")
-  //   }
-  //   if (bg == "Rain") {
-  //     setbackground([image[1]])
-  //     setSun("");
-  //     setclr("#D3D3D3")
-  //   }
-  //   if (bg == "Clear") {
-  //     setbackground([image[2]])
-  //     setSun([image[3]])
-  //     setclr("#DDA84C")
-  //   }
-  // }, [bg])
 
   useEffect(() => {
-    // const currentHour = 8;
     const currentHour = parseInt(Time.split(":")[0], 10);
     if (currentHour >= 18 || currentHour < 6) {
       if (bg == "Clear") {
@@ -161,9 +156,20 @@ const Tempapp = () => {
     return () => clearInterval(timer);
   })
 
+  const navigate = useNavigate()
+  const handleLogin = ()=>{
+    navigate("/signup")
+  }
+
+  useEffect(() => {
+      if(state){
+        setloggedVal("yes")
+      }
+    }, [state])
+
   return (
     <>
-      <div id='home' className='h-full md:h-screen w-screen overflow-hidden' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div id='home' className='h-full md:h-full w-screen overflow-hidden' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
 
         <div className='block md:flex w-full'>
           <div className='text-white relative w-full md:w-1/2 z-0'>
@@ -189,7 +195,7 @@ const Tempapp = () => {
           </div>
         </div>
 
-        <div className='flex flex-col items-center w-full mt-14 md:mt-40 lg:mt-14'>
+        <div className='flex flex-col items-center w-full mt-14 md:mt-40 lg:mt-24'>
           <div className='w-2/3 md:w-3/4 lg:w-2/4'>
             <h1 className=' italic text-white text-5xl font-bold'>WE CAST</h1>
           </div>
@@ -230,7 +236,36 @@ const Tempapp = () => {
           </div>
         </div>
 
+        {loggedVal!="yes"?<div className='mt-36 mb-36 flex flex-col items-center'>
+          <h1 className='text-xl md:text-3xl lg:text-5xl  text-white'>Log in to access the 5-day weather forecast</h1>
+          <button className='mt-28 mb-20 text-white text-3xl px-12 py-4 rounded-full' style={{ backgroundColor: clr }} onClick={handleLogin}>Login</button>
+        </div>:
+        <div className='flex mt-36 gap-5 lg:gap-10 px-10 mb-36 overflow-scroll'>
+          {weatherData && weatherData.map((days, index) => {
+            return <div key={index} className='text-white w-full flex flex-col items-center py-4 rounded-2xl px-5 scroll-smooth scroll-m-0' style={{ backgroundColor: clr }}>
+              <div className='w-full flex justify-center'>{days.date}
+              </div>
+              <div className='flex text-5xl mt-5 w-full justify-center'>
+                {((days.min_temp + days.max_temp)/2).toFixed(0)}
+                <div className='text-2xl'>°C</div>
+              </div>
+              <div className='flex w-full justify-center '>
+                <span>{days.min_temp}°C </span>
+                -
+                <span> {days.max_temp}°C</span>
+              </div>
+
+              <div className='flex mt-5 text-2xl w-full justify-center'>
+                {days.weather_summary[0]}
+              </div>
+
+
+            </div>
+          })}
+        </div>
+}
       </div>
+
     </>
   )
 }
