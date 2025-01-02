@@ -169,7 +169,7 @@ const Tempapp = () => {
 
   return (
     <>
-      <div id='home' className='h-full md:h-full w-full overflow-hidden' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div id='home' className='sc1 h-full md:h-full w-full overflow-hidden' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
 
         <div className='block md:flex w-full'>
           <div className='text-white relative w-full md:w-1/2 z-0'>
